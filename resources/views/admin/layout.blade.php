@@ -8,6 +8,17 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
 <link rel="stylesheet" href="/css/admin.css">
+<style>
+    table.table form{
+        display: inline-block;
+    }
+    button.delete-task{
+        background-color: transparent;
+        border: none;
+        color: #337ab7;
+        padding: 0px;
+    }
+</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -15,7 +26,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
@@ -47,7 +58,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -118,13 +129,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
@@ -175,7 +186,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
@@ -197,13 +208,13 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
-          <a href="#">
+          <a href="/admin">
             <i class="fa fa-dashboard"></i> <span>Админ-панель</span>
           </a>
         </li>
         <li><a href="#"><i class="fa fa-sticky-note-o"></i> <span>Посты</span></a></li>
-        <li><a href="#"><i class="fa fa-list-ul"></i> <span>Категории</span></a></li>
-        <li><a href="#"><i class="fa fa-tags"></i> <span>Теги</span></a></li>
+        <li><a href="/admin/categories"><i class="fa fa-list-ul"></i> <span>Категории</span></a></li>
+        <li><a href="/admin/tags"><i class="fa fa-tags"></i> <span>Теги</span></a></li>
         <li>
           <a href="#">
             <i class="fa fa-commenting"></i> <span>Комментарии</span>
