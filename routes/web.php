@@ -13,11 +13,12 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.dashboard');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+Route::group(['prefix' => 'administration', 'namespace' => 'Admin'], function () {
     Route::get('/', 'DashboardController@index');
     Route::resource('/categories', 'CategoriesController');
     Route::resource('/tags', 'TagsController');
+    Route::resource('/users', 'UsersController');
 });
