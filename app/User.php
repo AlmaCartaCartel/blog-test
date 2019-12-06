@@ -66,14 +66,16 @@ class User extends Authenticatable
     public function edit($fields)
     {
         $this->fill($fields);
-        $this->password = bcrypt($fields['password']);
+        if($fields['password'] !== null){
+            $this->password = bcrypt($fields['password']);
+        }
         $this->save();
     }
 
     public function remove()
     {
         if($this->avatar !== null){
-            Storage::delete('admin/uploads/' . $this->avatar);
+            Storage::delete('/uploads/admin/' . $this->avatar);
         }
         $this->delete();
     }
@@ -83,10 +85,10 @@ class User extends Authenticatable
         if ($avatar === null) return;
 
         if ($this->avatar !== null) {
-            Storage::delete('uploads/' . $this->avatar);
+            Storage::delete('/uploads/admin/' . $this->avatar);
         }
         $filename = str_random(10) . '.' . $avatar->extension();
-        $avatar->storeAs('admin/uploads', $filename);
+        $avatar->storeAs('/uploads/admin/', $filename);
 
         $this->avatar = $filename;
         $this->save();
@@ -97,7 +99,7 @@ class User extends Authenticatable
         if ($this->avatar === null) {
             return '/img/no-avatar.png';
         }
-        return '/admin/uploads/' . $this->avatar;
+        return '/uploads/admin/' . $this->avatar;
     }
 
     public function makeAdmin()
