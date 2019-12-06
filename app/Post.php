@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Storage;
@@ -21,12 +22,19 @@ class Post extends Model
 
     public function category()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function getCategoryTitle()
+    {
+        return ($this->category !== null)
+            ? $this->category->title
+            : 'Нет категории';
     }
 
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function tags()
@@ -38,6 +46,12 @@ class Post extends Model
             'tag_id'
         );
     }
+    public function getTagsTitles(){
+        return (!$this->tags->isEmpty())
+            ? implode(', ', $this->tags->pluck('title')->all())
+            : 'Без тегов';
+    }
+
     public function sluggable()
     {
         return [
@@ -65,17 +79,20 @@ class Post extends Model
 
     public function remove()
     {
-        Storage::delete('uploads/' . $this->image);
+        if($this->image !== null){
+            Storage::delete('uploads/' . $this->image);
+        }
         $this->delete();
     }
 
     public function uploadImage($image = null)
     {
         if ($image === null) return;
-        Storage::delete('uploads/' . $this->image);
-
+        if($this->image !== null){
+            Storage::delete('uploads/' . $this->image);
+        }
         $filename = str_random(10) . '.' . $image->extension();
-        $image->saveAs('uploads', $filename);
+        $image->storeAs('uploads', $filename);
 
         $this->image = $filename;
         $this->save();
@@ -86,7 +103,7 @@ class Post extends Model
         if ($this->image === null) {
             return 'img/no-image.png';
         }
-        return 'uploads/' . $this->image;
+        return '/uploads/' . $this->image;
     }
 
     public function setCategory($id = null)
@@ -144,5 +161,11 @@ class Post extends Model
         } else {
             return $this->setStandart();
         }
+    }
+
+    public function setDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('d/m/y',$value)->format('Y-m-d');
+        $this->attributes['date'] = $date;
     }
 }

@@ -4,7 +4,8 @@ $(document).ready(function(){
         $(".select2").select2();
         //Date picker
         $('#datepicker').datepicker({
-          autoclose: true
+          autoclose: true,
+            format: 'dd/mm/yy'
         });
         $(function () {
             $("#example1").DataTable();

@@ -49,13 +49,13 @@
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
-                            <td>Обучение</td>
-                            <td>Laravel, PHP</td>
+                            <td>{{ $post->getCategoryTitle() }}</td>
+                            <td>{{ $post->getTagsTitles() }}</td>
                             <td>
                                 <img src="{{ $post->getImage() }}" alt="" width="100">
                             </td>
                             <td>
-                                <a href="{{ route('posts.edit') }}" class="fa fa-pencil"></a>
+{{--                                <a href="{{ route('posts.edit') }}" class="fa fa-pencil"></a>--}}
                                 {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
                                 <button onclick="return confirm('Are you sure ?');" type="submit" class="delete-task">
                                     <i class="fa fa-remove"></i>
