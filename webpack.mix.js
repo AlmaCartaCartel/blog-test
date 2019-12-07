@@ -39,7 +39,7 @@ mix.scripts([
     'resources/assets/admin/plugins/iCheck/icheck.min.js',
     'resources/assets/admin/dist/js/app.min.js',
     'resources/assets/admin/dist/js/demo.js',
-    'resources/assets/admin/dist/js/scripts.js'
+    'resources/assets/admin/scripts.js'
 ], 'public/js/admin.js');
 
 mix.copy('resources/assets/admin/bootstrap/fonts', 'public/fonts');
