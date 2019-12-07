@@ -168,4 +168,8 @@ class Post extends Model
         $date = Carbon::createFromFormat('d/m/y',$value)->format('Y-m-d');
         $this->attributes['date'] = $date;
     }
+
+    public function getDateAttribute($value){
+        return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+    }
 }

@@ -18,10 +18,6 @@
 
         <!-- Main content -->
         <section class="content">
-            {{ Form::open([
-                'route' => 'posts.store',
-                'files' => true
-            ]) }}
             <!-- Default box -->
             <div class="box">
                 <div class="box-header">
@@ -55,7 +51,7 @@
                                 <img src="{{ $post->getImage() }}" alt="" width="100">
                             </td>
                             <td>
-{{--                                <a href="{{ route('posts.edit') }}" class="fa fa-pencil"></a>--}}
+                                <a href="{{ route('posts.edit', $post -> id) }}" class="fa fa-pencil"></a>
                                 {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
                                 <button onclick="return confirm('Are you sure ?');" type="submit" class="delete-task">
                                     <i class="fa fa-remove"></i>
@@ -70,7 +66,6 @@
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
-            {{ Form::close() }}
         </section>
         <!-- /.content -->
     </div>
