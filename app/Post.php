@@ -17,7 +17,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
-        'date'
+        'date',
+        'description'
     ];
 
     public function category()
@@ -171,5 +172,41 @@ class Post extends Model
 
     public function getDateAttribute($value){
         return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+    }
+
+    public function getDate(){
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+    }
+
+    public function hasPrevious()
+    {
+        return self::where('id', '<', $this->id)->max('id');
+    }
+
+    public function hasNext()
+    {
+        return self::where('id', '>', $this->id)->min('id');
+    }
+
+    public function getPrevious()
+    {
+        $postID = $this->hasPrevious();
+        return self::find($postID);
+    }
+
+    public function getNext()
+    {
+        $postID = $this->hasNext();
+        return self::find($postID);
+    }
+
+    public function related()
+    {
+        return self::all()->except($this->id);
+    }
+
+    public function hasCategory()
+    {
+        return $this->category !== null ? true : false;
     }
 }
