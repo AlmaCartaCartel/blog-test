@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -23,7 +24,10 @@ class Post extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+
+        return $this->belongsTo(Category::class, 'user_id')->withDefault([
+            'name' => 'Guest Author',
+        ]);
     }
 
     public function getCategoryTitle()
@@ -209,16 +213,29 @@ class Post extends Model
     {
         return $this->category !== null ? true : false;
     }
+
     public static function getPopularPosts()
     {
         return self::orderBy('views','desc')->take(3)->get();
     }
+
     public static function getFeaturedPosts()
     {
         return self::where('is_featured', 1)->take(3)->get();
     }
+
     public static function getNewPosts()
     {
         return self::orderBy('date', 'desc')->take(4)->get();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function getComments()
+    {
+        return $this -> comments() -> where('status', 1) -> get();
     }
 }

@@ -18,8 +18,9 @@ Route::get('/category/{slug}', 'HomeController@category')->name('category.show')
 
 Route::group(['middleware' => 'auth'], function (){
     Route::get('/logout','AuthController@logout');
-    Route::get('/profile', 'ProfileController@index');
+    Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::put('/profile', 'ProfileController@update')->name('profile.update');
+    Route::post('/comment', 'CommentController@add');
 });
 
 Route::group(['middleware' => 'guest'], function (){
@@ -35,4 +36,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::resource('/tags', 'TagsController');
     Route::resource('/users', 'UsersController');
     Route::resource('/posts', 'PostsController');
+    Route::get('/comments', 'CommentsController@index')-> name('comment.index');
+    Route::get('/comments/toggle/{id}', 'CommentsController@toggle')->name('comment.toggle');
+    Route::delete('/comments/destroy/{id}', 'CommentsController@destroy')->name('comment.destroy');
 });

@@ -17,21 +17,20 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = User::find(Auth::user()-> id);
+        $user = User::find(Auth::user()->id);
         $this->validate($request, [
-           'name' => 'required',
+            'name' => 'required',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($user -> id),
+                Rule::unique('users')->ignore($user->id),
             ],
-            'password' => 'required',
             'avatar' => 'nullable|image'
 
         ]);
 
         $user->edit($request->all());
         $user->uploadAvatar($request->file('avatar'));
-        return redirect()->route('home');
+        return redirect()->back()->with('status', 'Изменения успешно сохранены');
     }
 }
