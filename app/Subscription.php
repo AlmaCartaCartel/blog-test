@@ -17,6 +17,12 @@ class Subscription extends Model
         return $sub;
     }
 
+    public function edit($email)
+    {
+        $this->email = $email;
+        $this->save();
+    }
+
     public function remove()
     {
         $this->delete();
