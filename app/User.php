@@ -80,14 +80,14 @@ class User extends Authenticatable
         $this->delete();
     }
 
-    public function uploadAvatar($avatar = null)
+    public function uploadAvatar($avatar)
     {
         if ($avatar === null) return;
 
-        if ($this->avatar !== null) {
+        if ($this-> avatar !== null) {
             Storage::delete('/uploads/admin/' . $this->avatar);
         }
-        $filename = str_random(10) . '.' . $avatar->extension();
+        $filename = str_random(10) . '.' . $avatar -> extension();
         $avatar->storeAs('/uploads/admin/', $filename);
 
         $this->avatar = $filename;
