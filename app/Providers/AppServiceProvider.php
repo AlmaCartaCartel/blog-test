@@ -40,5 +40,9 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('admin._sidebar', function($view){
             $view->with('newPostsCount', Comment::where('status', 0)->count());
         });
+
+        view()->composer('admin.layout', function ($view){
+            $view->with('newPostsCount', Comment::where('status', 0)->count());
+        });
     }
 }

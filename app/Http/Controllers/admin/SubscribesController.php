@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\SubscribeMail;
+use App\Subscription;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class SubscribesController extends Controller
 {
@@ -14,7 +17,8 @@ class SubscribesController extends Controller
      */
     public function index()
     {
-        //
+        $subscribes = Subscription::all();
+        return view('admin.subscribes.index', compact('subscribes'));
     }
 
     /**
@@ -24,7 +28,7 @@ class SubscribesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.subscribes.create');
     }
 
     /**
@@ -35,51 +39,15 @@ class SubscribesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+           'email' => 'email|required|unique:subscriptions'
+        ]);
+
+        $subs = Subscription::add($request->get('email'));
+        $subs -> token = null;
+
+
+        return redirect()->back()->with('status', 'Новый подписчик добавлен!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

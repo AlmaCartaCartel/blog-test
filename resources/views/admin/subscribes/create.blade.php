@@ -18,9 +18,14 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Добавляем подписчика</h3>
-                    @include('admin.errors')
                 </div>
-                {{ Form::open(['route' => 'subscribes.update']) }}
+                {{ Form::open(['route' => 'subscribes.store']) }}
+                @include('admin.errors')
+                @if(session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <div class="box-body">
                     <div class="col-md-6">
                         <div class="form-group">
