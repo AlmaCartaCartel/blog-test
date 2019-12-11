@@ -143,4 +143,10 @@ class User extends Authenticatable
             $this->ban();
         }
     }
+
+    public function genereteToken()
+    {
+        $this -> token = str_random(100);
+        $this -> save();
+    }
 }

@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\RegistryMail;
 use Auth;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -19,9 +21,11 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required',
         ]);
-        User::add($request->all());
+        $user = User::add($request->all());
+        $user -> genereteToken();
+        Mail::to($user)->send( new RegistryMail($user));
 
-        return redirect('/login');
+        return redirect()->back()->with('status', 'Проверьтe вашу почту');
     }
 
     public function loginForm()
@@ -31,10 +35,16 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $user = User::where('email', $request -> get('email')) -> firstOrFail();
+
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
+
+        if ($user -> token !== null){
+            return redirect()->back()->with('status', 'Подтвердите почту!');
+        }
 
         if(Auth::attempt([
             'email' => $request->get('email'),
@@ -48,5 +58,14 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function verifications($token)
+    {
+        $user = User::where('token', $token)->firstOrFail();
+        $user -> token = null;
+        $user -> save();
+
+        return redirect()->route('login')->with('status', 'Почта подтверждена');
     }
 }

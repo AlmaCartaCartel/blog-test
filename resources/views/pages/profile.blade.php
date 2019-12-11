@@ -15,6 +15,10 @@
                         @endif
 
                         @include('admin.errors')
+
+                        @if(Auth::user()->is_admin === 1)
+                            <a href="{{ route('admin.dashboard') }}" class="btn send-btn">ADMIN DASHBOARD</a>
+                        @endif
                         <br>
                         <img src="{{ $user -> getImage() }}" alt="" class="profile-image">
 

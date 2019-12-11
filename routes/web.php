@@ -21,7 +21,7 @@ Route::post('/subscribe', 'SubsController@subscribe');
 Route::get('/confirm/{token}', 'SubsController@confirm');
 
 Route::group(['middleware' => 'auth'], function (){
-    Route::get('/logout','AuthController@logout');
+    Route::get('/logout','AuthController@logout')->name('logout');
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::put('/profile', 'ProfileController@update')->name('profile.update');
     Route::post('/comment', 'CommentController@add');
@@ -30,12 +30,13 @@ Route::group(['middleware' => 'auth'], function (){
 Route::group(['middleware' => 'guest'], function (){
     Route::get('/register', 'AuthController@registerForm');
     Route::post('/register', 'AuthController@register');
+    Route::get('/verifications/{token}', 'AuthController@verifications');
     Route::get('/login', 'AuthController@loginForm')->name('login');
     Route::post('/login', 'AuthController@login');
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
-    Route::get('/', 'DashboardController@index');
+    Route::get('/', 'DashboardController@index')->name('admin.dashboard');
     Route::resource('/categories', 'CategoriesController');
     Route::resource('/tags', 'TagsController');
     Route::resource('/users', 'UsersController');
